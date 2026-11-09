@@ -1,0 +1,143 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>Examinations</h1>
+
+<div class="glass-card my-3">
+
+    <h4>Create New Exam</h4>
+
+    <form method="post">
+
+        <input type="hidden"
+               name="csrf_token"
+               value="{{ csrf_token() }}">
+
+        <div class="row g-3">
+
+            <div class="col-md-6">
+
+                <label class="form-label">Exam Title</label>
+
+                <input
+                    class="form-control"
+                    name="title"
+                    placeholder="Java Programming Exam"
+                    required
+                >
+
+            </div>
+
+            <div class="col-md-6">
+
+                <label class="form-label">Subject Name</label>
+
+                <input
+                    class="form-control"
+                    name="subject_name"
+                    placeholder="Java"
+                    required
+                >
+
+            </div>
+
+            <div class="col-md-4">
+
+                <label class="form-label">Duration (Minutes)</label>
+
+                <input
+                    class="form-control"
+                    type="number"
+                    name="duration"
+                    min="1"
+                    value="30"
+                    required
+                >
+
+            </div>
+
+            <div class="col-12">
+
+                <label class="form-label">Description</label>
+
+                <textarea
+                    class="form-control"
+                    name="description"
+                    placeholder="Enter exam description">
+                </textarea>
+
+            </div>
+
+            <div class="col-12">
+
+                <button class="btn btn-primary">
+                    Create Exam
+                </button>
+
+            </div>
+
+        </div>
+
+    </form>
+
+</div>
+
+
+<h3 class="mt-4">Created Exams</h3>
+
+{% for e in exams %}
+
+<div class="glass-card my-3">
+
+    <h5>
+        {{ e.title }}
+
+        <span class="pill">
+            {{ 'Published' if e.is_published else 'Draft' }}
+        </span>
+    </h5>
+
+    <p>
+        Subject:
+        {{ e.subject.name if e.subject else 'Not assigned' }}
+        <br>
+
+        {{ e.duration_minutes }} minutes ·
+        {{ e.questions|length }} questions ·
+        {{ e.total_marks }} marks
+    </p>
+
+    <a href="{{ url_for('admin.edit_exam', eid=e.id) }}">
+        Add Questions →
+    </a>
+
+    <form
+        method="post"
+        action="{{ url_for('admin.publish_exam', eid=e.id) }}"
+    >
+
+        <input
+            type="hidden"
+            name="csrf_token"
+            value="{{ csrf_token() }}"
+        >
+
+        <button class="btn btn-sm btn-outline-primary mt-2">
+
+            {{ 'Unpublish' if e.is_published else 'Publish' }}
+
+        </button>
+
+    </form>
+
+</div>
+
+{% else %}
+
+<p>No exams created.</p>
+
+{% endfor %}
+
+{% endblock %}
