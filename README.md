@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # EduConnect — Flask full starter
 
 ## Included
@@ -35,3 +36,7 @@ Push to GitHub, create a Render Web Service, build command `pip install -r requi
 - The exam timer is browser-assisted. High-stakes exams need stronger server-side attempt/deadline enforcement, audit logs and testing.
 - `create_all()` is only for first-time setup. Use database migrations before schema changes.
 - Add password reset, email verification, rate limiting, backups, file scanning and privacy/security review before real public launch.
+=======
+# EduConnect
+Student Learning and Online Examination Platform
+>>>>>>> e2cb4aecff09cbd7983c762c898418c050d375d9
